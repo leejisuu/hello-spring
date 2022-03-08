@@ -2,15 +2,20 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+// bean 등록을 해주지 않으면 컨테이너에서 인식 못함
+// @Service
 public class MemberService { // ctrl + shitf + T -> Test 생성 가능
 
     private final MemberRepository memberRepository;
 
-    // DI
+    // MemberService가 생성 될 때 스프링 Bean에 등록되어 있는 MemoryMemberRepository 객체(구현체)를 주입해줌 => DI
+    // @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
