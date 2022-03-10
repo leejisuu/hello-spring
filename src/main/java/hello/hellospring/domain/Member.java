@@ -1,7 +1,13 @@
 package hello.hellospring.domain;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Member {
 
+    @Id
     private Long id; // 시스템이 저장하는 아이디
     private String name;
 

@@ -1,14 +1,26 @@
 package hello.hellospring;
 
 
+import hello.hellospring.repository.JdbcMemberRepository;
+import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import hello.hellospring.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class SpringConfig {
+
+    private DataSource dataSource;
+
+    @Autowired
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public MemberService memberService() {
@@ -17,7 +29,13 @@ public class SpringConfig {
 
     @Bean
     public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
+        // return new MemoryMemberRepository();
+        // return new JdbcMemberRepository(dataSource);
+        return new JdbcTemplateMemberRepository(dataSource);
     }
-
 }
+
+    // 스프링을 쓰는 이유 => 객체지향적인 설계 가능
+    // 다형성 활용 인터페이스를 두고 객체를 바꿔끼우기 가능 스프링 컨테이너가 지원
+    // DI 덕분에 기존의 코드는 건들지 않고 조립하는 코드만 고치면 되므로
+    // SOLID 원칙 중 OCP(개방-폐쇄 원칙) - 확장에는 열려있고 수정,변경에는 닫혀있다.
