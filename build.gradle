@@ -18,10 +18,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa + jdbc 모두 가능
 	runtimeOnly 'com.h2database:h2'
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
