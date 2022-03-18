@@ -18,7 +18,7 @@ public class JpaMemberRepository implements MemberRepository{
 
     @Override
     public Member save(Member member) {
-        em.persist(member);
+        em.persist(member); // jqpl에서는 insert 대신 persist 사용
         return member;
     }
 
@@ -30,12 +30,16 @@ public class JpaMemberRepository implements MemberRepository{
 
     @Override
     public Optional<Member> findByName(String name) {
-        return null;
+        List<Member> result = em.createQuery("select m from Member m where m.name = :name", Member.class) // :name에서 :은 이름 기준으로 데이터를 바인딩
+                .setParameter("name", name)
+                .getResultList();
+
+        return result.stream().findAny();
     }
 
     @Override
     public List<Member> findAll() {
-        return em.createQuery("select m from Member m", Member.class) // jpql => 객체를 대상으로 sql 구문 수행
+        return em.createQuery("select m from Member m", Member.class) // JPQL => 객체를 대상으로 sql 구문 수행(Member는 테이블이 아닌 객체)
                 .getResultList();
     }
     // Ctrl + Alt + N 인라인 단축키
