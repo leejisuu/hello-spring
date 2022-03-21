@@ -22,6 +22,9 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        System.out.println("memberService = " + memberService.getClass());
+        // Proxy방식의 aop
+        // memberService = class hello.hellospring.service.MemberService$$EnhancerBySpringCGLIB$$c371f6f3 -> 프록시 MemberService
     }
 
     // 2. 필드 주입 방식
